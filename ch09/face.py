@@ -1,9 +1,7 @@
 import cv2
 
 BLUE = (255, 0, 0)
-CV2_DIR = cv2.__path__[0]
-CLASSIFIER_PATH = f'{CV2_DIR}/data/haarcascade_frontalface_default.xml'
-face_classifier = cv2.CascadeClassifier(CLASSIFIER_PATH)
+face_classifier = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 DETECT_SCALE = 0.2
 
 def resize(img, scale):

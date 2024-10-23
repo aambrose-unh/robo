@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 from datetime import datetime
 import cv2
+from picamera2 import Picamera2
+from libcamera import Transform
 
 ESC_KEY = 27
 BLUE = (255, 0, 0)
@@ -21,19 +23,40 @@ def set_message(messages, text):
     messages[:] = [text] * MSG_FRAME_COUNT
 
 def main():
-    cap = cv2.VideoCapture(0)
-    assert cap.isOpened(), 'Cannot open camera'
+    
+    picam2 = Picamera2()
+    picam2.preview_configuration.main.size = (1280, 720)
+    picam2.preview_configuration.main.format = "RGB888"
+    picam2.preview_configuration.align()
+    transform=Transform(hflip=1)
+    picam2.configure("preview")
+    picam2.start()
 
-    messages = []
-    while (key := cv2.waitKey(1)) not in [ord('q'), ESC_KEY]:
-        ret, frame = cap.read()
-        assert ret, 'Cannot read frame from camera'
-        if key == ord(' '):
-            save_photo(frame)
-            set_message(messages, 'saving photo...')
-        show_image(frame, messages)
+    try:
+        while True:
+            im = picam2.capture_array()
+            cv2.imshow("Camera", im)
 
-    cap.release()
+            # Save an image when a key is pressed (e.g., 's')
+            key = cv2.waitKey(1)
+            messages = []
+            if key == ord('s'):
+                save_photo(im)
+                set_message(messages, 'saving photo...')
+
+            # Exit the loop when 'q' is pressed
+            elif key == ord('q'):
+                break
+                
+            show_image(im, messages)
+            print("Image saved!")
+
+    finally:
+        # Release resources
+        cv2.destroyAllWindows()
+        picam2.stop()
+        picam2.close()
+    
 
 if __name__ == "__main__":
     main()
