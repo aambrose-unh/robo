@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 import cv2
+import os
 
 BLUE = (255, 0, 0)
-CV2_DIR = cv2.__path__[0]
-CLASSIFIER_PATH = f'{CV2_DIR}/data/haarcascade_frontalface_default.xml'
-face_classifier = cv2.CascadeClassifier(CLASSIFIER_PATH)
+# CV2_DIR = cv2.__path__[0]
+# CV2_DIR = os.path.dirname(os.path.abspath(cv2.__file__))
+# CLASSIFIER_PATH = f'{CV2_DIR}/data/haarcascade_frontalface_default.xml'
+# print(f"{CLASSIFIER_PATH}")
+# face_classifier = cv2.CascadeClassifier(CLASSIFIER_PATH)
+face_classifier = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
 
 def get_center(x, y, w, h):
     return int(x + (w / 2)), int(y + (h / 2))
