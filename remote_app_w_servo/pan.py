@@ -3,12 +3,15 @@ from adafruit_crickit import crickit
 import time
 
 ANGLE_STEP = 2
-PAN = dict(servo=crickit.servo_1, min=30, max=110, start=70, range=142)
+PAN = dict(servo=crickit.servo_1, min=0, max=210, start=0, range=210)
 TILT = dict(servo=crickit.servo_2, min=90, max=180, start=180, range=180)
-MOVE = dict(left=(PAN, -1), right=(PAN, 1), up=(TILT, -1), down=(TILT, 1))
+MOVE = dict(left=(PAN, 1), right=(PAN, -1), up=(TILT, -1), down=(TILT, 1))
 
 def move_motor(direction):
     motor, factor = MOVE[direction]
+    print(f"{motor=}")
+    print(f"{factor=}")
+    print(f"{direction=}")
     new_angle = motor['servo'].angle + (ANGLE_STEP * factor)
     if motor['min'] <= new_angle <= motor['max']:
         motor['servo'].angle = new_angle

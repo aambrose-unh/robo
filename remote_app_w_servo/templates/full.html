@@ -30,13 +30,9 @@
     <button formaction="forward">&blacktriangle;</button>
     <button formaction="backward">&blacktriangledown;</button>
     <br><br>
-    <button formaction="left">&blacktriangleleft;</button>
-    <button formaction="right">&blacktriangleright;</button>
+    <button formaction="spin_left">&circlearrowleft;</button> <button formaction="left">&blacktriangleleft;</button>
+    <button formaction="right">&blacktriangleright;</button> <button formaction="spin_right">&circlearrowright;</button>
     <br><br>
-    <button formaction="spin_left">&circlearrowleft;</button>
-    <button formaction="spin_right">&circlearrowright;</button>
-    <br><br>
-    <button formaction="noop">X</button>
   </form>
   <h2><a href='/'>Camera</a></h2>
   {{ stamp }}<br><br>
@@ -48,6 +44,9 @@
     <button formaction="pan_right">&blacktriangleright;</button>
     <br><br>
   </form>
+  <h2><a href='/'>Camera</a></h2>
+  {{ stamp }}<br><br>
+  <img src="data:image/jpeg;base64,{{ image_data }}" />
 </body>
 
 </html>
